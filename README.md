@@ -1,10 +1,14 @@
 # Natural
 
-A macOS menubar app to toggle natural scrolling with one click. No more digging through Settings > Trackpad every time you switch between an external mouse and trackpad.
+A macOS menubar app to toggle natural scrolling with one click. No more digging through Settings > Trackpad every time you switch between an external mouse and trackpad. Intentionally minimal -- one feature, no bloat.
 
 ## How it works
 
 Natural lives in your menubar. Click the icon, hit "Toggle Scrolling", done. The change applies instantly -- no logout required.
+
+## Keyboard shortcut
+
+Press **Cmd+Ctrl+N** anywhere to toggle natural scrolling without opening the menu. A native macOS notification confirms the new state (ON/OFF).
 
 ## Compatibility
 

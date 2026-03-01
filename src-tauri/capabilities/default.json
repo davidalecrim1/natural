@@ -2,5 +2,9 @@
   "identifier": "default",
   "description": "Default capabilities",
   "windows": [],
-  "permissions": []
+  "permissions": [
+    "global-shortcut:allow-register",
+    "global-shortcut:allow-unregister",
+    "notification:default"
+  ]
 }
