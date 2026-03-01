@@ -75,3 +75,7 @@ make clean     # Clean build artifacts
 - [Tauri v2](https://v2.tauri.app/) -- lightweight native app framework
 - Rust -- all app logic
 - [libloading](https://crates.io/crates/libloading) -- dynamic framework loading for instant toggle
+
+## License
+
+MIT
