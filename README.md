@@ -10,6 +10,10 @@ Natural lives in your menubar. Click the icon, hit "Toggle Scrolling", done. The
 
 Press **Cmd+Ctrl+N** anywhere to toggle natural scrolling without opening the menu. A native macOS notification confirms the new state (ON/OFF).
 
+## Launch at login
+
+Click "Launch at Login" in the menu to toggle whether Natural starts automatically on login. macOS will ask for permission the first time — confirm it in **System Settings > General > Login Items & Extensions**.
+
 ## Compatibility
 
 | macOS Version | Status |
@@ -28,7 +32,7 @@ The app uses Apple's private `PreferencePanesSupport.framework` for instant togg
 ### From source
 
 ```
-git clone <repo-url>
+git clone https://github.com/davidalecrim1/natural
 cd natural
 npm install
 make install

@@ -1,5 +1,9 @@
 use std::process::Command;
 
+fn parse_scroll_output(s: &str) -> bool {
+    s.trim() == "1"
+}
+
 /// Returns true if natural scrolling is currently enabled.
 pub fn is_natural_scrolling() -> bool {
     let output = Command::new("defaults")
@@ -7,10 +11,7 @@ pub fn is_natural_scrolling() -> bool {
         .output();
 
     match output {
-        Ok(out) => {
-            let val = String::from_utf8_lossy(&out.stdout).trim().to_string();
-            val == "1"
-        }
+        Ok(out) => parse_scroll_output(&String::from_utf8_lossy(&out.stdout)),
         Err(_) => true,
     }
 }
@@ -79,4 +80,29 @@ fn post_notification_fallback() {
         )
     "#;
     let _ = Command::new("swift").args(["-e", script]).output();
+}
+
+#[cfg(test)]
+mod tests {
+    use super::parse_scroll_output;
+
+    #[test]
+    fn natural_on() {
+        assert!(parse_scroll_output("1"));
+    }
+
+    #[test]
+    fn natural_off() {
+        assert!(!parse_scroll_output("0"));
+    }
+
+    #[test]
+    fn empty_string() {
+        assert!(!parse_scroll_output(""));
+    }
+
+    #[test]
+    fn trims_whitespace() {
+        assert!(parse_scroll_output("1\n"));
+    }
 }
