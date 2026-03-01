@@ -12,7 +12,7 @@ Press **Cmd+Ctrl+N** anywhere to toggle natural scrolling without opening the me
 
 ## Launch at login
 
-Click "Launch at Login" in the menu to toggle whether Natural starts automatically on login. macOS will ask for permission the first time — confirm it in **System Settings > General > Login Items & Extensions**.
+Natural registers itself to launch at login automatically on first run. macOS will ask for permission — confirm it in **System Settings > General > Login Items & Extensions**.
 
 ## Compatibility
 
@@ -29,8 +29,6 @@ The app uses Apple's private `PreferencePanesSupport.framework` for instant togg
 
 ## Install
 
-### From source
-
 ```
 git clone https://github.com/davidalecrim1/natural
 cd natural
@@ -38,21 +36,7 @@ npm install
 make install
 ```
 
-This builds the app and copies `Natural.app` to `/Applications`.
-
-### From .dmg
-
-Download the latest `.dmg` from releases, open it, and drag `Natural.app` to Applications.
-
-### Gatekeeper note
-
-Since the app is not code-signed for distribution, macOS may block it on first launch. To allow it:
-
-```
-xattr -cr /Applications/Natural.app
-```
-
-Or right-click the app > Open > Open.
+This builds the app on your machine and copies `Natural.app` to `/Applications`. Because it's compiled locally, macOS Gatekeeper won't block it.
 
 ## Development
 

@@ -32,6 +32,5 @@ endif
 	git tag v$(SEMVER)
 	git push origin v$(SEMVER)
 	gh release create v$(SEMVER) \
-		src-tauri/target/release/bundle/dmg/Natural_$(SEMVER)_aarch64.dmg \
 		--title "v$(SEMVER)" \
 		--generate-notes

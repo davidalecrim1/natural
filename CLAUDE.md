@@ -26,7 +26,7 @@ make install                    # Build and copy to /Applications
 make clean                      # Clean Rust build artifacts
 make lint                       # Check formatting and run Clippy
 make test                       # Run Rust unit tests
-make release VERSION=x.y.z      # Bump versions, build, tag, push, create GitHub release (accepts v-prefix)
+make release VERSION=x.y.z      # Bump versions, tag, push, create GitHub release (accepts v-prefix, no DMG attached)
 ```
 
 ## Prerequisites
