@@ -20,10 +20,13 @@ Tray-only Tauri v2 app. No visible window, no Dock icon. All logic runs on the R
 ## Commands
 
 ```
-make dev       # Run in development mode
-make build     # Production build (.app + .dmg)
-make install   # Build and copy to /Applications
-make clean     # Clean Rust build artifacts
+make dev                        # Run in development mode
+make build                      # Production build (.app + .dmg)
+make install                    # Build and copy to /Applications
+make clean                      # Clean Rust build artifacts
+make lint                       # Check formatting and run Clippy
+make test                       # Run Rust unit tests
+make release VERSION=x.y.z      # Bump versions, build, tag, push, create GitHub release
 ```
 
 ## Prerequisites
@@ -31,6 +34,15 @@ make clean     # Clean Rust build artifacts
 - Rust (rustup)
 - Node.js + npm
 - Xcode Command Line Tools
+
+## Workflow
+
+After completing any code change, always run:
+
+```
+make lint
+make test
+```
 
 ## Conventions
 
