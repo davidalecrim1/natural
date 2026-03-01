@@ -26,7 +26,7 @@ make install                    # Build and copy to /Applications
 make clean                      # Clean Rust build artifacts
 make lint                       # Check formatting and run Clippy
 make test                       # Run Rust unit tests
-make release VERSION=x.y.z      # Bump versions, build, tag, push, create GitHub release
+make release VERSION=x.y.z      # Bump versions, build, tag, push, create GitHub release (accepts v-prefix)
 ```
 
 ## Prerequisites
@@ -50,3 +50,4 @@ make test
 - Tray icon is managed entirely in Rust code (not in tauri.conf.json) to avoid duplicate icons
 - Icon uses `icon_as_template(true)` for macOS light/dark menubar adaptation
 - App hides from Dock via `set_activation_policy(Accessory)`
+- Launch at login is enabled automatically on first run (not user-togglable)

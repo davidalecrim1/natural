@@ -20,17 +20,18 @@ test:
 
 release:
 ifndef VERSION
-	$(error Usage: make release VERSION=0.2.0)
+	$(error Usage: make release VERSION=x.y.z)
 endif
-	@echo "Releasing v$(VERSION)..."
-	sed -i '' 's/"version": ".*"/"version": "$(VERSION)"/' src-tauri/tauri.conf.json
-	sed -i '' 's/^version = ".*"/version = "$(VERSION)"/' src-tauri/Cargo.toml
-	sed -i '' 's/"version": ".*"/"version": "$(VERSION)"/' package.json
+	$(eval SEMVER := $(patsubst v%,%,$(VERSION)))
+	@echo "Releasing v$(SEMVER)..."
+	sed -i '' 's/"version": ".*"/"version": "$(SEMVER)"/' src-tauri/tauri.conf.json
+	sed -i '' 's/^version = ".*"/version = "$(SEMVER)"/' src-tauri/Cargo.toml
+	sed -i '' 's/"version": ".*"/"version": "$(SEMVER)"/' package.json
 	$(MAKE) build
 	git checkout -- src-tauri/tauri.conf.json src-tauri/Cargo.toml package.json
-	git tag v$(VERSION)
-	git push origin v$(VERSION)
-	gh release create v$(VERSION) \
-		src-tauri/target/release/bundle/dmg/Natural_$(VERSION)_aarch64.dmg \
-		--title "v$(VERSION)" \
+	git tag v$(SEMVER)
+	git push origin v$(SEMVER)
+	gh release create v$(SEMVER) \
+		src-tauri/target/release/bundle/dmg/Natural_$(SEMVER)_aarch64.dmg \
+		--title "v$(SEMVER)" \
 		--generate-notes
