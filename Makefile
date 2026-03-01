@@ -28,9 +28,10 @@ endif
 	sed -i '' 's/^version = ".*"/version = "$(SEMVER)"/' src-tauri/Cargo.toml
 	sed -i '' 's/"version": ".*"/"version": "$(SEMVER)"/' package.json
 	$(MAKE) build
-	git checkout -- src-tauri/tauri.conf.json src-tauri/Cargo.toml package.json
+	git add src-tauri/tauri.conf.json src-tauri/Cargo.toml package.json src-tauri/Cargo.lock
+	git commit -m "chore: bump version to $(SEMVER)"
 	git tag v$(SEMVER)
-	git push origin v$(SEMVER)
+	git push origin main v$(SEMVER)
 	gh release create v$(SEMVER) \
 		--title "v$(SEMVER)" \
 		--generate-notes
