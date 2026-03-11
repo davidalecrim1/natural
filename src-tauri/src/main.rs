@@ -14,6 +14,7 @@ use tauri_plugin_notification::NotificationExt;
 const TRAY_ID: &str = "main-tray";
 const ITEM_STATUS: &str = "status";
 const ITEM_TOGGLE: &str = "toggle";
+const ITEM_AUTOSTART: &str = "autostart";
 const ITEM_QUIT: &str = "quit";
 
 fn scroll_label(is_natural: bool) -> &'static str {
@@ -24,16 +25,30 @@ fn scroll_label(is_natural: bool) -> &'static str {
     }
 }
 
+fn autostart_label(is_enabled: bool) -> &'static str {
+    if is_enabled {
+        "✓ Launch at Login"
+    } else {
+        "  Launch at Login"
+    }
+}
+
 fn build_menu<M: Manager<tauri::Wry>>(app: &M) -> tauri::Result<Menu<tauri::Wry>> {
     let status_text = scroll_label(scroll::is_natural_scrolling());
+    let autostart_text = autostart_label(app.autolaunch().is_enabled().unwrap_or(false));
 
     let status = MenuItem::with_id(app, ITEM_STATUS, status_text, false, None::<&str>)?;
     let sep = PredefinedMenuItem::separator(app)?;
     let toggle = MenuItem::with_id(app, ITEM_TOGGLE, "Toggle Scrolling", true, None::<&str>)?;
     let sep2 = PredefinedMenuItem::separator(app)?;
+    let autostart = MenuItem::with_id(app, ITEM_AUTOSTART, autostart_text, true, None::<&str>)?;
+    let sep3 = PredefinedMenuItem::separator(app)?;
     let quit = MenuItem::with_id(app, ITEM_QUIT, "Quit Natural", true, None::<&str>)?;
 
-    Menu::with_items(app, &[&status, &sep, &toggle, &sep2, &quit])
+    Menu::with_items(
+        app,
+        &[&status, &sep, &toggle, &sep2, &autostart, &sep3, &quit],
+    )
 }
 
 fn rebuild_tray_menu(app: &AppHandle) {
@@ -73,12 +88,6 @@ fn main() {
                 .build(),
         )
         .setup(|app| {
-            // Enable launch at login by default on first run.
-            let autolaunch = app.autolaunch();
-            if !autolaunch.is_enabled().unwrap_or(false) {
-                let _ = autolaunch.enable();
-            }
-
             let menu = build_menu(app)?;
 
             let icon = tauri::image::Image::from_bytes(include_bytes!("../icons/icon.png"))?;
@@ -91,6 +100,15 @@ fn main() {
                 .tooltip("Natural Scrolling Toggle")
                 .on_menu_event(|app, event| match event.id.as_ref() {
                     ITEM_TOGGLE => toggle_and_update_menu(app),
+                    ITEM_AUTOSTART => {
+                        let al = app.autolaunch();
+                        if al.is_enabled().unwrap_or(false) {
+                            let _ = al.disable();
+                        } else {
+                            let _ = al.enable();
+                        }
+                        rebuild_tray_menu(app);
+                    }
                     ITEM_QUIT => app.exit(0),
                     _ => {}
                 })
