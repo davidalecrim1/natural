@@ -39,11 +39,17 @@ fn build_menu<M: Manager<tauri::Wry>>(app: &M) -> tauri::Result<Menu<tauri::Wry>
 
     let status = MenuItem::with_id(app, ITEM_STATUS, status_text, false, None::<&str>)?;
     let sep = PredefinedMenuItem::separator(app)?;
-    let toggle = MenuItem::with_id(app, ITEM_TOGGLE, "Toggle Scrolling", true, None::<&str>)?;
+    let toggle = MenuItem::with_id(
+        app,
+        ITEM_TOGGLE,
+        "Toggle Scrolling",
+        true,
+        Some("cmd+ctrl+n"),
+    )?;
     let sep2 = PredefinedMenuItem::separator(app)?;
     let autostart = MenuItem::with_id(app, ITEM_AUTOSTART, autostart_text, true, None::<&str>)?;
     let sep3 = PredefinedMenuItem::separator(app)?;
-    let quit = MenuItem::with_id(app, ITEM_QUIT, "Quit Natural", true, None::<&str>)?;
+    let quit = MenuItem::with_id(app, ITEM_QUIT, "Quit Natural", true, Some("cmd+q"))?;
 
     Menu::with_items(
         app,

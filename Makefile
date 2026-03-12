@@ -1,12 +1,15 @@
-.PHONY: dev build install clean release lint test
+.PHONY: dev build _build install clean release lint test
 
 dev:
 	npm run tauri dev
 
-build:
-	npm run tauri build
+_build:
+	npm run tauri build -- --bundles app
 
-install: build
+build:
+	npm run tauri build -- --bundles app,dmg
+
+install: _build
 	cp -r src-tauri/target/release/bundle/macos/Natural.app /Applications/
 
 clean:
@@ -27,7 +30,7 @@ endif
 	sed -i '' 's/"version": ".*"/"version": "$(SEMVER)"/' src-tauri/tauri.conf.json
 	sed -i '' 's/^version = ".*"/version = "$(SEMVER)"/' src-tauri/Cargo.toml
 	sed -i '' 's/"version": ".*"/"version": "$(SEMVER)"/' package.json
-	$(MAKE) build
+	$(MAKE) _build
 	git add src-tauri/tauri.conf.json src-tauri/Cargo.toml package.json src-tauri/Cargo.lock
 	git commit -m "chore: bump version to $(SEMVER)"
 	git tag v$(SEMVER)
